@@ -13,3 +13,4 @@ tmp
 db/*.db
 
 .env
+key.txt

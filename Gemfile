@@ -9,3 +9,5 @@ gem "activerecord"
 gem "sqlite3"
 gem "pry"
 gem "require_all"
+gem 'json'
+gem 'rest-client'

@@ -9,3 +9,5 @@ Dir[File.join(File.dirname(__FILE__), '../app/models', '*.rb')].each { |f| requi
 ActiveRecord::Base.logger = nil
 # ActiveRecord::Base.logger = Logger.new(STDOUT)
 require_all 'app'
+
+$token = File.read("key.txt")
