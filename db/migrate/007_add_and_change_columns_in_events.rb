@@ -7,4 +7,5 @@ class AddAndChangeColumnsInEvents < ActiveRecord::Migration[5.2]
         remove_column :events, :price
         remove_column :events, :address
     end 
+    []
 end 
