@@ -7,20 +7,23 @@ def search_events
     puts "3. Search by friends"
     puts "4. Random Free Event"
     puts "5. Return to Main Menu"
-    choice = gets.chomp   
-    if choice == "1"
+    choice = gets.chomp 
+    # exit_program(choice)
+    # help(choice) 
+    case choice 
+    when "1"
        search_by_category
-    elsif choice == "2"
+    when "2"
        search_by_date
-    elsif choice == "3"
+    when "3"
         search_by_friends
-    elsif choice == "4"
+    when"4"
        random_event
-    elsif choice == "5"
+    when "5"
         list
     else 
-        puts "Invalid selection, returning to main menu!"
-        list
+        invalid_response(choice)
+        search_events
     end
 end
 
@@ -37,12 +40,14 @@ def search_by_category
     sleep(0.5)
     puts "Please type in the name of a category:"
     categ = gets.chomp
+    # exit_program(choice)
+    # help(choice)
     sleep(0.5)
     if cat = Category.find_by(name: categ)
         selected_events = Event.all.select {|event| cat == event.category }
         if selected_events.empty?
             puts "No results found, returning to search page!" 
-            sleep(1)
+            sleep(0.5)
             search_events
         else
             i = 0
@@ -53,7 +58,7 @@ def search_by_category
             end
         end
     else
-        puts "Invalid Selection, returning to search page"
+        invalid_response(choice)
         search_by_category
     end
     puts "Returning to Main Menu!"
@@ -83,15 +88,18 @@ def list_event(event)
     puts "2. See next event"
     puts "3. Return to search menu"
     choice = gets.chomp
-    if choice == "1"
+    # exit_program(choice)
+    # help(choice)
+    case choice 
+    when "1"
         $current_user.save_event(event)
         puts "Event saved to your events!"
-    elsif choice == "2"
-    elsif choice == "3"
+    when "2"
+    when "3"
         puts "Returning to Search Menu!"
         search_events
     else
-        puts "Invalid Response!"
+        invalid_response(choice)
         search_events
     end
 end
@@ -99,7 +107,9 @@ end
 def search_by_date
     puts "You have chosen to search by Date. Please enter a date in mm/dd/yyyy format"
     choice = gets.chomp
-    if choice.length == 10
+    # exit_program(choice)
+    # help(choice) 
+    if choice.length == 10 
         month = choice[0..1].to_i
         day = choice[3..4].to_i
         year = choice[6..9].to_i
@@ -113,8 +123,8 @@ def search_by_date
             end
         end
     else
-        puts "Invalid Response, returning to search menu."
-        search_events
+        invalid_response(choice)
+        search_by_date
     end
     puts "No results found. Returning to Search Menu!"
     search_events
@@ -123,6 +133,8 @@ end
 def search_by_friends
     puts "You have chosen to search events by friends. Please enter a friends username:"
     choice = gets.chomp
+    # exit_program(choice)
+    # help(choice) 
     if friend = User.find_by(username: choice)
         friend_events = friend.events
         if !friend_events.empty?
@@ -137,7 +149,7 @@ def search_by_friends
             search_events
         end
     else
-        puts "username does not exist, returning to search menu."
+        puts "Username does not exist, returning to search menu."
         search_events
     end
 end

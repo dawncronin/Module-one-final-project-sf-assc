@@ -5,27 +5,29 @@ class User < ActiveRecord::Base
     has_many :categories, through: :preferences
 
 
-    def self.popular_events
-        User.all.map do |user|
-            events = user.events.name
-            [user.username, events]
+    def self.most_popular_events
+        pop = Hash.new(0)
+        User.all.each do |user|
+            user.events.each {|event| pop[event.name] += 1 }
         end
+        puts pop
     end
 
-    def self.all_categories
-        User.all.map do |user|
-            categories = user.categories
-            [user.username, categories]
+  
+
+    def self.most_popular_preferences
+        pop = Hash.new(0)
+        User.all.each do |user|
+            user.categories.each { |cat| pop[cat.name] += 1}
         end
+        pop
     end
 
     def self.most_popular_categories
         pop = Hash.new(0)
         User.all.each do |user|
-            user.categories.each do |cat|
-            pop[cat.name] += 1
+            user.events.each {|event| pop[event.category] += 1}
         end
-    end
         pop
     end
 

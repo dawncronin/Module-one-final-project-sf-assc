@@ -2,7 +2,9 @@ require_relative '../config/environment'
 require 'pry'
 
 #welcome
-search_events
+#stats
+$current_user = User.find_by(username: "dawn")
+view_friends
 
 
 binding.pry
