@@ -1,8 +1,7 @@
 require_relative '../config/environment'
 require 'pry'
 
+welcome
 
 
 
-binding.pry
-puts "HELLO WORLD"
