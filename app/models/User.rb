@@ -12,22 +12,29 @@ class User < ActiveRecord::Base
         end
     end
 
-    def self.popular_categories
+    def self.all_categories
         User.all.map do |user|
-            categories = user.preferences.categories
+            categories = user.categories
             [user.username, categories]
         end
     end
 
+    def self.most_popular_categories
+        pop = Hash.new(0)
+        User.all.each do |user|
+            user.categories.each do |cat|
+            pop[cat.name] += 1
+        end
+    end
+        pop
+    end
+
     def save_event(event)
-        UserEvent.new(user_id: self.id, event_id: event.id)
+        UserEvent.create(user_id: self.id, event_id: event.id)
     end
 
     def save_category(category)
-        Preference.new(user_id: self.id, category_id: category.id)
+        Preference.create(user_id: self.id, category_id: category.id)
     end
-
-
-
     
 end
