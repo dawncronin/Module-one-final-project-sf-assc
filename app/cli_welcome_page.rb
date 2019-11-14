@@ -19,6 +19,7 @@ def login
     username = gets.chomp
     if User.find_by(username: username)
         $current_user = User.find_by(username: username)
+        puts "Welcome back #{username}!"
         list_options
         
         list
@@ -27,10 +28,10 @@ def login
         sleep(1)
         puts "Type 'yes' to continue or 'no' to abort."
     
-            input = gets.chomp
-            if input == "no"
+            choice = gets.chomp
+            if choice == "no"
                 welcome
-            elsif input == "yes"
+            elsif choice == "yes"
                 $current_user = User.create(username: username)
                 puts "Great, #{username} is now an active member!"
                 sleep(1)
@@ -39,7 +40,8 @@ def login
                 list_options
                 list
             else 
-                 puts "invalid selection, returning to homepage..."
+             invalid_response
+             puts "Returning to homepage..."
              welcome
             end 
     end 
@@ -49,22 +51,23 @@ def login
 end 
 
 def list
+    list_options
     sleep(1)
     puts "1. Search for events"
     puts "2. View the community"
     puts "3. View your profile"
     puts "4. View SFASSC stats"
-    input = gets.chomp
-    if input == "1"
+    choice = gets.chomp
+    if choice == "1"
         search_events
-    elsif input == "2"
+    elsif choice == "2"
         #view_friends
-    elsif input == "3"
-        #view_profile
-    elsif  input == "4"
+    elsif choice == "3"
+        view_profile
+    elsif  choice == "4"
        # view_stats
     else 
-        puts "invalid command, please choose from one of the options below."
+        invalid_response
         list
     end 
 
@@ -76,6 +79,12 @@ def list_options
         puts "please select a number from the options below to continue"
         sleep(2)
 end 
+
+def invalid_response(choice)
+    puts "#{choice} is an invalid response. Please choose an appropriate response."
+end 
+
+
 
 
 
