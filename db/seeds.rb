@@ -1,7 +1,7 @@
 require_relative '../config/environment'
-i = 1
+i = 16
 
-50.times do 
+10.times do 
     response = RestClient.get("https://www.eventbriteapi.com/v3/events/search/?q=san%20francisco&token=#{$token}&page=#{i}")
     response_hash = JSON.parse(response)
     all_events = response_hash["events"].map do |event|
@@ -18,6 +18,7 @@ i = 1
      all_events.each do |event| 
         Event.create(event)
     end 
+    sleep(3)
 end 
 
     # category_response = RestClient.get("https://www.eventbriteapi.com/v3/categories/?token=#{$token}&page=1")
