@@ -157,21 +157,35 @@ end
 
 def view_rsvps
     puts "Your current RSVPs are..."
-    $current_user.events.reload.each_with_index do |event, i|
+    user_events = $current_user.events.reload
+    if user_events.length == 0
+        puts "You have no RSVPS :("
+        puts "Would you like to add an RSVP?"
+        puts "Type 'yes' to search for events..."
+        puts "Type 'no' to return to your profile..."
+        choice = gets.chomp
+        if choice == 'yes'
+            search_events
+        elsif choice == 'no'
+            view_profile
+        else invalid_response(choice)
+        end    
+    else  
+        user_events.each_with_index do |event, i|
         puts "#{i +1}. #{event.name}"
-    end 
-    puts "Would you like to update your RSVPs?"
-    puts "Type 'yes' to update or 'no' to view your profile..."
-    choice = gets.chomp
-    if choice == 'yes'
-        update_rsvps
-    elsif choice == 'no'
-        view_profile
-    else 
-        invalid_response(choice)
-        view_rsvps
-    end 
-
+        end 
+         puts "Would you like to update your RSVPs?"
+         puts "Type 'yes' to update or 'no' to view your profile..."
+            choice = gets.chomp
+             if choice == 'yes'
+                update_rsvps
+            elsif choice == 'no'
+               view_profile
+            else 
+                invalid_response(choice)
+                view_rsvps
+            end 
+    end
 
 end 
 
