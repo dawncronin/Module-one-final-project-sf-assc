@@ -37,6 +37,7 @@ def login
                 sleep(1)
                 puts "You will be added to the the elite group of friends in the SFASSC community!"
                 sleep(1)
+                
                 list
             else 
              invalid_response(choice)
