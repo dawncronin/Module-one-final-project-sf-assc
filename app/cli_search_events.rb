@@ -31,15 +31,15 @@ def search_by_category
     Category.all.each do |cat|
         puts "------------------------------"
         puts cat.name
-        sleep(0.5)
+        sleep(0.1)
     end
 
     puts "------------------------------" 
     sleep(0.5)
     puts "Please type in the name of a category:"
     categ = gets.chomp
-    # exit_program(choice)
-    # help(choice)
+    exit_program(choice)
+    help(choice)
     sleep(0.5)
     if cat = Category.find_by(name: categ)
         selected_events = Event.all.select {|event| cat == event.category }
@@ -138,8 +138,6 @@ end
 def search_by_friends
     puts "You have chosen to search events by friends. Please enter a friends username:"
     choice = gets.chomp
-    # exit_program(choice)
-    # help(choice) 
     if friend = User.find_by(username: choice)
         friend_events = friend.events
         if !friend_events.empty?
@@ -162,6 +160,7 @@ end
 def random_event
     "Here is your random free event!"
     list_event(Event.rand_free_event)
+    random_event
     "Returning to search menu"
     search_events
 end

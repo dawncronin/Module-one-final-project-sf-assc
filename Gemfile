@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 source "https://rubygems.org"
 
+gem 'artii'
 gem 'dotenv'
 gem 'faker'
 gem "rake"

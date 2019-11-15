@@ -1,20 +1,12 @@
 require_relative '../config/environment'
 require 'pry'
 
-#welcome
-#search_events
-# $current_user = User.find_by(username: "danny")
-# view_profile 
+# a = Artii::Base.new 
+# puts a.asciify('S.F.A.S.S.C.')
+#
 
 welcome
-# 20.times do 
-#     user = User.all.sample
-#     event = Event.all.sample
-#     category = Category.all.sample
-#     user.save_event(event)
-#     user.save_category(category)
-# end
 
 
-binding.pry
-puts "HELLO WORLD"
+# binding.pry
+# puts "HELLO WORLD"

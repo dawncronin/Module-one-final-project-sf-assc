@@ -214,29 +214,30 @@ def delete_event
     my_events = $current_user.events.reload 
      my_events.each_with_index do |event, i|
         puts "#{i +1}. #{event.name}"
-    
-    end 
+     end 
     puts "Please type the event you would like to remove by number..."
     choice = gets.chomp
-    event_object = Event.find_by(name: choice)
-    
-    if  $current_user.events.include?(event_object)
-        
+    exit_program(choice)
+    help choice
+    choice = choice.to_i
+    if choice == 0
+        invalid_response
+        delete_event
+    else my_events[choice -1]
+        event_object = my_events[choice -1]
         $current_user.events.each do |event|
             if event_object.id == event.id
                 user_event = UserEvent.find_by(event_id: event.id)
                 UserEvent.destroy(user_event.id)
                 $current_user.events.reload
              
+                end 
             end 
-        end 
         puts "#{choice} has been removed from your events!"
         view_rsvps
-        
-    else
-        invalid_response(choice)
-        delete_event
     end 
+        
+    
 
 end 
 

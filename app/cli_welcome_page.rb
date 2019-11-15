@@ -5,12 +5,17 @@ def welcome
 end 
 
 def welcome_message
+    sfassc
+    sleep(1)
     puts "Welcome to the San Francisco Anti-Social Social Club!"
-    sleep(0.5)
+    sleep(1)
+    smile
     puts "San Francisco's best hangout hub!"
-    sleep(0.5)
+    sleep(1)
     puts "This is an elite club for elite people to do elite things"
-    sleep(0.5)
+    sleep(1)
+    hashtags
+
     puts "Please type 'help' at any time to see a list of option, or 'exit' to leave the SF ASSC"
     puts "Please enter your username to get started"
 end 
@@ -108,7 +113,17 @@ def help(choice)
     end
 end
 
+def hashtags
+    puts "########################################################################"
+end 
 
+def sfassc
+    a = Artii::Base.new 
+    puts a.asciify('S.F.A.S.S.C.')
+end 
 
+def smile
+    puts ":) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :) :)"
+end
 
 
