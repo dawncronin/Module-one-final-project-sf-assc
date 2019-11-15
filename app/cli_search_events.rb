@@ -8,8 +8,6 @@ def search_events
     puts "4. Random Free Event"
     puts "5. Return to Main Menu"
     choice = gets.chomp 
-    # exit_program(choice)
-    # help(choice) 
     case choice 
     when "1"
        search_by_category

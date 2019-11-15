@@ -8,8 +8,8 @@ def welcome_message
     puts "Welcome to the San Francisco Anti-Social Social Club!"
     sleep(0.5)
     puts "San Francisco's best hangout hub!"
-   sleep(0.5)
-   puts "This is an elite club for elite people to do elite things"
+    sleep(0.5)
+    puts "This is an elite club for elite people to do elite things"
     sleep(0.5)
     puts "Please type 'help' at any time to see a list of option, or 'exit' to leave the SF ASSC"
     puts "Please enter your username to get started"
@@ -37,7 +37,6 @@ def login
                 sleep(1)
                 puts "You will be added to the the elite group of friends in the SFASSC community!"
                 sleep(1)
-                list_options
                 list
             else 
              invalid_response(choice)
