@@ -1,14 +1,15 @@
 def view_profile
-    puts "Welcome #{$current_user.username} to your profile!"
+    $current_user.reload
+    puts "Welcome, #{$current_user.username}, to your profile!"
     puts "Here are a few things you can do with your profile..."
-    puts "please select a number of one of the options below to continue..."
-    puts "1. view your category prefernces"
-    puts "2. update your category prefernces"
-    puts "3. view your RSVPs"
-    puts "4. update your RSVPs"
-    puts "5. profile settings"
-    puts "6. return to main menu."
-    puts "7. logout"
+    puts "Please select a number of one of the options below to continue..."
+    puts "1. View your category prefernces"
+    puts "2. Update your category prefernces"
+    puts "3. View your RSVPs"
+    puts "4. Update your RSVPs"
+    puts "5. Profile settings"
+    puts "6. Return to main menu."
+    puts "7. Logout"
     
   
 
@@ -43,9 +44,9 @@ end
 
 def view_category_preferences
     if $current_user.categories.reload.length == 0
-        puts "you have no preferences"
-        puts "would you like to add preferences?"
-        puts "type 'yes' to update or no to return to your profile"
+        puts "You have no preferences."
+        puts "Would you like to add preferences?"
+        puts "Type 'yes' to update or 'no' to return to your profile."
         choice = gets.chomp
         if choice == 'yes'
             add_category
@@ -58,13 +59,13 @@ def view_category_preferences
     else
 
 
-        puts "your preferences are..." 
+        puts "Your preferences are..." 
         preferences = $current_user.categories.each_with_index do |category, i|
             puts "#{i +1}. #{category.name}"
          end 
         sleep(2)
-         puts "would you like to update your preferences?"
-         puts "type 'yes' to continue or 'no' to return to your profile"
+         puts "Would you like to update your preferences?"
+         puts "Type 'yes' to continue or 'no' to return to your profile"
          choice = gets.chomp
          if choice == "yes"
              update_category_preferences
@@ -81,10 +82,10 @@ end
 
 def update_category_preferences
     puts "Let's update your preferences"
-    puts "Please select a number of one of the options below to continue"
-    puts "1. remove preference"
-    puts "2. add preference"
-    puts "3. return to profile"
+    puts "Please select a number of one of the options below to continue..."
+    puts "1. Remove preference"
+    puts "2. Add preference"
+    puts "3. Return to profile"
     choice = gets.chomp
     if choice == "1"
         delete_category
@@ -101,11 +102,11 @@ def update_category_preferences
 end 
 
 def delete_category
-    puts "your prefernces are..."
+    puts "Your prefernces are..."
     preferences = $current_user.categories.each_with_index do |category, i|
         puts "#{i +1}. #{category.name}"
     end 
-    puts "type the preference you would like to remove"
+    puts "Type the preference you would like to remove"
     choice = gets.chomp
     categ_object = Category.find_by(name: choice)
     
@@ -131,8 +132,8 @@ def delete_category
 end 
 
 def add_category
-    puts "what preference would you like add?"
-    puts "please type a preference below "
+    puts "What preference would you like add?"
+    puts "Please type a preference below "
     Category.all.each do |cat|
         puts "------------------------------"
         puts cat.name
@@ -142,10 +143,10 @@ def add_category
     categ_object = Category.find_by(name: choice)
     
     if $current_user.categories.include?(categ_object)
-        puts "this is already included in your preferences. please add another..."
+        puts "This is already included in your preferences. Please add another..."
         add_category
     elsif $current_user.save_category(categ_object)
-        puts "#{choice} has been added to your preferences"
+        puts "#{choice} has been added to your preferences!"
         view_category_preferences
     else invalid_response
         add_category
@@ -155,19 +156,19 @@ end
 
 
 def view_rsvps
-    puts "your current RSVPs are"
+    puts "Your current RSVPs are..."
     $current_user.events.reload.each_with_index do |event, i|
         puts "#{i +1}. #{event.name}"
     end 
-    puts "would you like to update your RSVPs?"
-    puts "type 'yes' to update or 'no' to view your profile"
+    puts "Would you like to update your RSVPs?"
+    puts "Type 'yes' to update or 'no' to view your profile..."
     choice = gets.chomp
     if choice == 'yes'
         update_rsvps
     elsif choice == 'no'
         view_profile
     else 
-        invalid_response
+        invalid_response(choice)
         view_rsvps
     end 
 
@@ -177,9 +178,9 @@ end
 def update_rsvps
     puts "let's update your RSVPs"
     puts "Please select a number of one of the options below to continue"
-    puts "1. remove event"
-    puts "2. add event"
-    puts "3. return to profile"
+    puts "1. Remove event"
+    puts "2. Add event"
+    puts "3. Return to profile"
     choice = gets.chomp
     if choice == "1"
         delete_event
@@ -226,9 +227,9 @@ end
 def profile_settings
     puts "You can update your profile!"
     puts "choose a number below to continue"
-    puts "1. update your username"
-    puts "2. delete your profile"
-    puts "3. return to profile"
+    puts "1. Update your username"
+    puts "2. Delete your profile"
+    puts "3. Return to profile"
     choice = gets.chomp
     if choice == '1'
         update_username
@@ -237,39 +238,48 @@ def profile_settings
     elsif choice == '3'
         view_profile
     else
-        invalid_response
+        invalid_response(choice)
         profile_settings
     end 
 
 end 
 def delete_profile
-    puts "to delete your profile type 'continue'"
-    puts "to return to your profile typee 'return'"
+    puts "To delete your profile type 'continue'..."
+    puts "To return to your profile type 'return'..."
     choice = gets.chomp
     if choice == 'return'
         view_profile
     elsif choice == 'continue'
         User.delete($current_user.id)
-        puts "#{$current_user}'s account has been deleted'"
+        puts "#{$current_user.username}'s account has been deleted'"
         welcome
     else
-        invalid_response
+        invalid_response(choice)
         delete_profile
     end 
 end 
 
 def update_username
-    puts "Hello #{$current_user}!"
+    puts "Hello #{$current_user.username}!"
     puts "Please enter a new username"
-    choice == gets.chomp
-    if User.find_by(name: choice )
+    choice = gets.chomp
+    if User.find_by(username: choice )
+        exit_program(choice)
+        help(choice)
         puts "Sorry this username is already taken"
         puts "please enter another"
-    else 
-    $current_user.name = choice
+        update_username
+    else
+        exit_program(choice)
+        help(choice)
+    $current_user.update(username: choice)
     $current_user.reload
+    puts "Fantastic! your new username is #{choice}"
+    puts "returning to profile"
+    view_profile
+   
     end 
-
+    
 end 
 
 
