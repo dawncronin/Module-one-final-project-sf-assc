@@ -66,22 +66,29 @@ end
 def list_event(event)
     puts "---------------------------------------------------------------------"
     puts "#{event.name}"
-    sleep(0.5)
+    sleep(0.1)
     puts "---------------------------------------------------------------------"
     puts "Description: #{event.description}"
-    sleep(1)
+    sleep(0.1)
     puts "---------------------------------------------------------------------"
+    if event.start_date
     puts "Date: #{event.start_date.to_date}"
-    sleep(0.5)
+    sleep(0.1)
+    end
     puts "---------------------------------------------------------------------"
-    puts "Category: #{event.category.name}"
-    sleep(0.5)
+    if event.category
+        puts "Category: #{event.category.name}"
+        sleep(0.1)
+    end
     puts "---------------------------------------------------------------------"
     puts "Free event?: #{event.is_free}"
-    sleep(0.5)
+    sleep(0.1)
+    puts "---------------------------------------------------------------------"
+    puts "URL: #{event.url}"
+    sleep(0.1)
     puts "---------------------------------------------------------------------"
     puts "Please choose one of the following"
-    sleep(0.5)
+    sleep(0.1)
     puts "1. RSVP to event"
     puts "2. See next event"
     puts "3. Return to search menu"

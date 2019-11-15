@@ -137,7 +137,7 @@ def add_category
     Category.all.each do |cat|
         puts "------------------------------"
         puts cat.name
-        sleep(0.5)
+        sleep(0.1)
     end
     choice = gets.chomp
     categ_object = Category.find_by(name: choice)
@@ -211,19 +211,21 @@ end
 
 def delete_event
     puts "your RSVPs are..."
-     $current_user.events.each_with_index do |event, i|
+    my_events = $current_user.events.reload 
+     my_events.each_with_index do |event, i|
         puts "#{i +1}. #{event.name}"
-    end 
-    puts "type the event you would like to remove"
-    choice = gets.chomp
-    categ_object = Event.find_by(name: choice)
     
-    if  $current_user.events.include?(categ_object)
+    end 
+    puts "Please type the event you would like to remove by number..."
+    choice = gets.chomp
+    event_object = Event.find_by(name: choice)
+    
+    if  $current_user.events.include?(event_object)
         
         $current_user.events.each do |event|
-            if categ_object.id == event.category_id
-                event = Event.find(event.id)
-                Event.destroy(event.id)
+            if event_object.id == event.id
+                user_event = UserEvent.find_by(event_id: event.id)
+                UserEvent.destroy(user_event.id)
                 $current_user.events.reload
              
             end 
@@ -243,13 +245,16 @@ def profile_settings
     puts "choose a number below to continue"
     puts "1. Update your username"
     puts "2. Delete your profile"
-    puts "3. Return to profile"
+    puts "3. Check if your username is a palindrome..."
+    puts "4. Return to profile"
     choice = gets.chomp
     if choice == '1'
         update_username
     elsif choice == '2'
         delete_profile
     elsif choice == '3'
+        palindrome
+    elsif choice == '4'
         view_profile
     else
         invalid_response(choice)
@@ -295,7 +300,18 @@ def update_username
     end 
     
 end 
-
+def palindrome
+    if $current_user.username == $current_user.username.reverse
+        puts "YES!! #{$current_user.username} is a palindrome!"
+        puts "What are the odds?!?!?"
+    else 
+        puts "Sorry #{$current_user.username} is not a palindrome :("
+       
+    end 
+    puts "Returning to your profile"
+    sleep(2)
+    view_profile
+end 
 
 def logout
     welcome
