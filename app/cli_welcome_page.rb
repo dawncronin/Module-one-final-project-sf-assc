@@ -40,7 +40,7 @@ def login
                 list_options
                 list
             else 
-             invalid_response
+             invalid_response(choice)
              puts "Returning to homepage..."
              welcome
             end 
