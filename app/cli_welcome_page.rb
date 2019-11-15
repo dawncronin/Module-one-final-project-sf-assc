@@ -19,6 +19,7 @@ end
 def login
     username = gets.chomp
     exit_program(username)
+    help(username)
     if User.find_by(username: username)
         $current_user = User.find_by(username: username)
         puts "Welcome back #{username}!"
@@ -27,7 +28,6 @@ def login
     else 
         puts "Sorry, this user does not exist, would you like to create an account with this username?"
         puts "Type 'yes' to continue or 'no' to abort."
-    
             choice = gets.chomp
             if choice == "no"
                 welcome
@@ -62,7 +62,7 @@ def list
     elsif choice == "2"
         view_friends
     elsif choice == "3"
-        #view_profile
+        view_profile
     elsif  choice == "4"
        stats
     else 
@@ -79,6 +79,8 @@ def list_options
 end 
 
 def invalid_response(choice)
+    exit_program(choice)
+    help(choice)
     puts "#{choice} is an invalid response. Please choose an appropriate response."
 end 
 
@@ -89,8 +91,21 @@ def exit_program(choice)
     end
 end
 
-def help
-
+def help(choice)
+    if choice == 'help'
+        puts "Oh no! How can I help you?"
+        puts "1. Logout"
+        puts "2. Exit SF ASSC"
+        help_choice = gets.chomp
+        exit_program(choice)
+        if help_choice == "1"
+            welcome
+        elsif help_choice == "2"
+            exit_program("exit")
+        else
+            invalid_response(help_choice)
+        end
+    end
 end
 
 
