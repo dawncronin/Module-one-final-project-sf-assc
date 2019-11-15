@@ -6,26 +6,26 @@ end
 
 def welcome_message
     puts "Welcome to the San Francisco Anti-Social Social Club!"
-    sleep(1)
+    sleep(0.5)
     puts "San Francisco's best hangout hub!"
-   sleep(1)
+   sleep(0.5)
    puts "This is an elite club for elite people to do elite things"
-    sleep(1)
+    sleep(0.5)
+    puts "Please type 'help' at any time to see a list of option, or 'exit' to leave the SF ASSC"
     puts "Please enter your username to get started"
 end 
 
 
 def login
     username = gets.chomp
+    exit_program(username)
     if User.find_by(username: username)
         $current_user = User.find_by(username: username)
         puts "Welcome back #{username}!"
-        list_options
         
         list
     else 
         puts "Sorry, this user does not exist, would you like to create an account with this username?"
-        sleep(1)
         puts "Type 'yes' to continue or 'no' to abort."
     
             choice = gets.chomp
@@ -52,7 +52,6 @@ end
 
 def list
     list_options
-    sleep(1)
     puts "1. Search for events"
     puts "2. View the community"
     puts "3. View your profile"
@@ -61,13 +60,13 @@ def list
     if choice == "1"
         search_events
     elsif choice == "2"
-        #view_friends
+        view_friends
     elsif choice == "3"
-        view_profile
+        #view_profile
     elsif  choice == "4"
-       # view_stats
+       stats
     else 
-        invalid_response
+        invalid_response(choice)
         list
     end 
 
@@ -75,16 +74,24 @@ end
 
 def list_options
     puts "Here's a brief list of things you can do to get started..."
-        sleep(1)
-        puts "please select a number from the options below to continue"
-        sleep(2)
+        sleep(0.5)
+        puts "Please select a number from the options below to continue"
 end 
 
 def invalid_response(choice)
     puts "#{choice} is an invalid response. Please choose an appropriate response."
 end 
 
+def exit_program(choice)
+    if choice == 'exit'
+        puts "Goodbye!"
+        exit!(2)
+    end
+end
 
+def help
+
+end
 
 
 

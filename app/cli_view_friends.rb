@@ -1,5 +1,5 @@
 def view_friends
-    puts "Please choose and option below:"
+    puts "Please choose an option below:"
     puts "1. See all friends by username"
     puts "2. Search for events by friends' RSVPs"
     puts "3. Search for friends with specific interests"
@@ -34,11 +34,10 @@ def friends_by_interests
     Category.all.each do |cat|
         puts "------------------------------"
         puts cat.name
-        sleep(0.5)
+        sleep(0.1)
     end
 
     puts "------------------------------" 
-    sleep(0.5)
     puts "Please type in the name of a category:"
     categ = gets.chomp
     #exit_program(choice)
@@ -46,10 +45,15 @@ def friends_by_interests
     sleep(0.5)
     if cat = Category.find_by(name: categ)
         usernames = cat.users.map {|user| user.username}
-        puts "These users have interest in #{cat}:"
-        usernames.each_with_index {|user| puts "#{i+1}. #{user}"}
+        if !usernames.empty?
+        puts "These users have interest in #{cat.name}:"
+        usernames.each_with_index {|user, i| puts "#{i+1}. #{user}"}
+        else 
+            puts "No one likes #{categ} :("
+        end
     else
-        invalid_response(choice)
-        similar_interests
+        invalid_response(categ)
+        friends_by_interests
     end
+    view_friends
 end
