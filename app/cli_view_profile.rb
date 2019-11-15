@@ -258,6 +258,20 @@ def delete_profile
     end 
 end 
 
+def update_username
+    puts "Hello #{$current_user}!"
+    puts "Please enter a new username"
+    choice == gets.chomp
+    if User.find_by(name: choice )
+        puts "Sorry this username is already taken"
+        puts "please enter another"
+    else 
+    $current_user.name = choice
+    $current_user.reload
+    end 
+
+end 
+
 
 def logout
     welcome
