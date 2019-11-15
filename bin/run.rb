@@ -1,9 +1,13 @@
 require_relative '../config/environment'
 require 'pry'
 
-# a = Artii::Base.new 
-# puts a.asciify('S.F.A.S.S.C.')
-#
+# 50.times do
+#     user = User.all.sample
+#     event = Event.all.sample
+#     cat = Category.all.sample
+#     user.save_event(event)
+#     user.save_category(cat)
+# end
 
 welcome
 

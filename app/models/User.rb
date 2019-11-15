@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
         end
         pop = pop.sort_by{ |cat, count| count}
         i = 0
-        pop.each do |cat, count|
+        pop.reverse.each do |cat, count|
             unless i > 5
             puts "#{count} friends(s) are interested in #{cat}"
             i += 1
@@ -44,9 +44,14 @@ class User < ActiveRecord::Base
         end
         pop = pop.sort_by{ |cat, count| count}
         i = 0
-        pop.each do |cat, count|
+        pop.reverse.each do |cat, count|
             unless i > 4
-            puts "#{count} friends(s) are going to events about #{cat.name}"
+            if cat
+                cat_name = cat.name
+            else
+                cat_name = "Other"
+            end
+            puts "#{count} RSVPS are for events about #{cat_name}"
             i += 1
             end
         end
